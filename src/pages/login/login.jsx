@@ -1,11 +1,12 @@
 import React, {Component} from "react";
-import {withRouter} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import {Form, Input, Button, Modal, Radio} from 'antd';
+import {Form, Input, Button, Modal, Radio, message,} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import md5 from 'md5';
 
-import {loginControl, registerControl} from "../../redux/actions";
+import {reqLogin, reqRegister,reqInfo} from "../../api";
+import {loginControl, registerControl, login} from "../../redux/actions";
 import './login.less'
 
 
@@ -30,19 +31,41 @@ class Login extends Component {
 
 
   loginFinish = (value) => {
-    let password = value.password;
-    let username = value.username;
-    password = md5(password);
-    console.log(password);
+    if (value) {
+      let password = value.password;
+      let username = value.username;
+      password = md5(password);
+      this.props.login(username, password)
+    } else {
+      console.log('登录校验失败')
+    }
   };
-  registerFinish = (value) => {
-
-    console.log(value);
+  test = async () => {
+    const username = "123456";
+    const result=reqInfo(username);
+    console.log(result)
+  }
+  registerFinish = async (value) => {
+    this.props.registerControl(false);
+    const {username, name, group} = value;
+    let password = value.password;
+    password = md5(password);
+    const result = await reqRegister(username, password, name, group);
+    const res = result.data;
+    if (res.status === 1) {
+      message.success("注册成功！");
+    } else {
+      message.error(res.message);
+    }
   };
 
   render() {
     const loginFlag = this.props.loginFlag;
     const registerFlag = this.props.registerFlag;
+    const user = this.props.user;
+    if (user&&user.id) {
+      return <Redirect to ='/home'/>
+    }
     return (
       <div className="container">
         <Modal
@@ -140,7 +163,7 @@ class Login extends Component {
               />
             </Form.Item>
             <Form.Item
-              name="nickname"
+              name="name"
               rules={[
                 {required: true, whitespace: true, message: '请输入姓名'},
               ]}
@@ -150,7 +173,7 @@ class Login extends Component {
             <Form.Item
               name={'group'}
             >
-              <Radio.Group >
+              <Radio.Group>
                 <Radio value={1} name={'group'}>2020级</Radio>
                 <Radio value={2} name={'group'}>2019级</Radio>
               </Radio.Group>
@@ -185,7 +208,7 @@ class Login extends Component {
           <p>Login page of online clock in system of
             Lecheng software studio, School of computer science,
             Southwest Petroleum University.</p>
-          {/*<button className="black">Join us</button>*/}
+          <button className="black" onClick={this.test}>Join us</button>
         </div>
       </div>
     )
@@ -193,6 +216,10 @@ class Login extends Component {
 }
 
 export default connect(
-  state => ({loginFlag: state.loginComponentControl, registerFlag: state.registerComponentControl}),
-  {loginControl, registerControl}
+  state => ({
+    loginFlag: state.loginComponentControl,
+    registerFlag: state.registerComponentControl,
+    user: state.user
+  }),
+  {loginControl, registerControl, login}
 )(withRouter(Login))

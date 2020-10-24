@@ -3,6 +3,7 @@ import {Redirect, Route, Switch} from 'react-router-dom';
 import {
   Layout
 } from 'antd';
+import {connect} from "react-redux"
 import 'moment/locale/zh-cn';
 
 
@@ -20,15 +21,19 @@ import './admin.less';
 
 const {Content, Footer,} = Layout;
 
-export default class Admin extends Component {
+class Admin extends Component {
 
   render() {
+    const user = this.props.user;
+    if (!user || !user.id) {
+      return <Redirect to="/login"/>
+    }
     return (
       <Layout style={{minHeight: '100vh'}}>
         <LeftNav/>
         <Layout className="site-layout">
           <Header/>
-          <Content style={{margin: '20px 16px',backgroundColor:"#fff"}}>
+          <Content style={{margin: '20px 16px', backgroundColor: "#fff"}}>
             <Switch>
               <Redirect exact from={'/'} to={'/home'}/>
               <Route path={'/home'} component={Home}/>
@@ -45,3 +50,8 @@ export default class Admin extends Component {
     )
   }
 }
+
+export default connect(
+  state => ({user: state.user}),
+  {}
+)(Admin)

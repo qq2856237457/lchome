@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React ,{Component}from "react";
 import ReactEcharts from 'echarts-for-react';
 import {Card, DatePicker} from "antd";
 import locale from "antd/es/date-picker/locale/zh_CN";
@@ -8,7 +8,6 @@ let sum = 0;
 for (var i = 0; i < data.length; i++) {
   sum += data[i];
 }
-const {RangePicker} = DatePicker;
 
 
 const option = {
@@ -79,10 +78,14 @@ const option = {
   ]
 };
 
-export default class Chars extends Component {
-
+export default  class Chars extends Component{
+  onChange = (date, dateString) => {
+    console.log(dateString);
+  };
   render() {
-    const extra = (<RangePicker locale={locale} picker="week" className={"data-form"}/>)
+    const extra = (
+      <DatePicker locale={locale} onChange={this.onChange} picker="week"/>
+    );
     return (
       <div>
         <Card title={'个人打卡数据周记'} extra={extra}>
@@ -91,5 +94,6 @@ export default class Chars extends Component {
       </div>
     )
   }
-}
+};
+
 

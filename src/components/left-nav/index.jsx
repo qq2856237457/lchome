@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import {Avatar, Menu, Layout,Modal} from "antd";
+import {Avatar, Menu, Layout, Modal} from "antd";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
 import {
   DesktopOutlined,
   PieChartOutlined,
@@ -11,12 +12,13 @@ import {
 } from '@ant-design/icons';
 
 import './index.less';
+import {logout} from "../../redux/actions";
 
 const {SubMenu} = Menu;
 const {Sider} = Layout;
 const {confirm} = Modal;
 
-export default class LeftNav extends Component {
+class LeftNav extends Component {
   state = {
     collapsed: false,
   };
@@ -25,26 +27,25 @@ export default class LeftNav extends Component {
     console.log(collapsed);
     this.setState({collapsed});
   };
-  getPath = () => {
-    console.log(this.props);
-  };
+
 
   logout = () => {
     confirm({
       title: '你要退出吗?',
       onOk: () => {
         // 清除数据，
-        console.log('退出');
+        this.props.logout();
       }
     });
   };
 
   componentWillMount() {
-    this.getPath();
+
   }
 
   render() {
-    const name = '文磊';
+    const user = this.props.user;
+    const {name} = user;
     const {collapsed} = this.state;
 
     return (
@@ -83,7 +84,7 @@ export default class LeftNav extends Component {
           <Menu.Item key='/info' icon={<FileOutlined/>}>
             <Link to={'/info'}>我的资料</Link>
           </Menu.Item>
-          <Menu.Item key='/logout' icon={<LogoutOutlined />}>
+          <Menu.Item key='/logout' icon={<LogoutOutlined/>}>
             <Link onClick={this.logout}>退出登录</Link>
           </Menu.Item>
         </Menu>
@@ -91,5 +92,9 @@ export default class LeftNav extends Component {
 
     )
   }
-
 }
+
+export default connect(
+  state => ({user: state.user}),
+  {logout}
+)(LeftNav)

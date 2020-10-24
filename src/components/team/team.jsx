@@ -8,6 +8,7 @@ export default class Team extends Component {
     loading: false,
     currentTime: formateDate(Date.now())
   };
+
   handChange = () => {
     this.setState({
       loading: true
@@ -36,7 +37,7 @@ export default class Team extends Component {
     const {currentTime} = this.state;
     const extra = (
       <div>
-        <span style={{marginRight:40}}>{currentTime}</span>
+        <span style={{marginRight: 40}}>{currentTime}</span>
         <Button type={"primary"}
                 onClick={this.handChange}
                 style={{marginRight: 20}}
@@ -47,7 +48,6 @@ export default class Team extends Component {
     );
     const {loading} = this.state;
     const {columns, data, title} = this.props;
-
     return (
       <Card title={title} extra={extra}>
         <Table
@@ -58,7 +58,7 @@ export default class Team extends Component {
           pagination={{
             defaultPageSize: 5,
             showQuickJumper: true,
-            total: 10
+            total: data.length
           }}
         />
       </Card>
