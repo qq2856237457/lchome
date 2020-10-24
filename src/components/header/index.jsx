@@ -2,37 +2,48 @@ import React, {Component} from "react";
 import {connect} from "react-redux"
 import {Button,} from "antd";
 
-import {changeState} from "../../redux/actions";
+import {changeState, getUser} from "../../redux/actions";
+import {reqClearStudent} from "../../api";
 
 import './index.less';
 
 
 class Header extends Component {
-  click = (username) => {
-    changeState(username)
+  state = {
+    clear: '罗青云'
   };
+  click = (username) => {
+
+    this.props.changeState(username)
+  };
+
+  getClear = async () => {
+    const result = await reqClearStudent();
+    const res = res.data;
+    if (res.status === 1) {
+      this.setState({clear:res.data})
+    }
+  };
+
+  componentWillUnmount() {
+
+    // this.props.getUser(this.props.user.number);
+  }
 
   render() {
     const user = this.props.user;
-    const zhiri = '徐燕';
-    const {state, username} = user;
-    // if (state === 1) {
-    //   // 正在打卡，显示的应该是结束打卡
-    //   const end = '结束打卡';
-    // } else if (state === 0) {
-    //   // 没有打卡，显示的应该是开始打卡
-    //   const start = '开始打卡';
-    // }
+    const {clear} = this.state;
+    const {state, number} = user;
     return (
       <div className="site-layout-background">
-        <p className={'search'}>今日值日：{zhiri}</p>
+        <p className={'clear'}>今日值日：{clear}</p>
         {
           state == 1 ?
             <Button type={"primary"} danger className={'state-button'}
-                    onClick={() => this.click(username)}>{'结束打卡'}
+                    onClick={() => this.click(number)}>{'结束打卡'}
             </Button> :
             <Button type={"primary"} className={'state-button'}
-                    onClick={() => this.click(username)}>{'开始打卡'}
+                    onClick={() => this.click(number)}>{'开始打卡'}
             </Button>
         }
       </div>
@@ -42,5 +53,5 @@ class Header extends Component {
 
 export default connect(
   state => ({user: state.user}),
-  {changeState}
+  {changeState, getUser}
 )(Header)

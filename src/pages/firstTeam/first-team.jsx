@@ -1,21 +1,16 @@
 import React, {Component} from "react";
-import {reqFirstTeam,} from "../../api";
+import {connect} from "react-redux";
+
 
 import Team from "../../components/team/team";
 import {columns} from "../../utils/columns/columns";
+import {getFirst} from "../../redux/actions";
 
 
-export default class First extends Component {
-  state = {
-    data: []
-  };
-  getData = async () => {
-    const result = await reqFirstTeam();
-    console.log(result);
-    const res = result.data;
-    if (res.status === 1) {
-      this.setState({data: res.data})
-    }
+class First extends Component {
+
+  getData = () => {
+    this.props.getFirst();
   };
 
   componentDidMount() {
@@ -24,9 +19,14 @@ export default class First extends Component {
 
   render() {
     const title = '大一打卡列表';
-    const {data} = this.state;
+    const data = this.props.list;
     return (
       <Team columns={columns} data={data} title={title}></Team>
     )
   }
 }
+
+export default connect(
+  state=>({list:state.getList}),
+  {getFirst}
+)(First)

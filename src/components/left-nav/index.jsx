@@ -72,10 +72,10 @@ class LeftNav extends Component {
           </Menu.Item>
           <SubMenu key="sub1" icon={<UserOutlined/>} title="打卡详情">
             <Menu.Item key='/second' icon={<UserOutlined/>}>
-              <Link to={'/second'}>2019级打卡详情</Link>
+              <Link to={'/second'}>大二打卡详情</Link>
             </Menu.Item>
             <Menu.Item key='/first' icon={<TeamOutlined/>}>
-              <Link to={'/first'}>2020级打卡详情</Link>
+              <Link to={'/first'}>大一打卡详情</Link>
             </Menu.Item>
           </SubMenu>
           <Menu.Item key='/chars' icon={<PieChartOutlined/>}>
