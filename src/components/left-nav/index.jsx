@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {
   DesktopOutlined,
-  PieChartOutlined,
+  BarChartOutlined,
   FileOutlined,
   TeamOutlined,
   UserOutlined,
@@ -13,6 +13,7 @@ import {
 
 import './index.less';
 import {logout} from "../../redux/actions";
+import img from  '../../static/head.jpg'
 
 const {SubMenu} = Menu;
 const {Sider} = Layout;
@@ -60,7 +61,7 @@ class LeftNav extends Component {
             style={{color: '#fde3cf', backgroundColor: '#f56a00'}}
             className={'avatar'}
             size={80}
-            icon={<UserOutlined/>}
+            src={img}
           />
           <div className={'signature'} style={{display: collapsed ? "none" : ''}}>
             {name}
@@ -78,11 +79,11 @@ class LeftNav extends Component {
               <Link to={'/first'}>大一打卡详情</Link>
             </Menu.Item>
           </SubMenu>
-          <Menu.Item key='/chars' icon={<PieChartOutlined/>}>
+          <Menu.Item key='/chars' icon={<BarChartOutlined />}>
             <Link to={'/chars'}>打卡周报</Link>
           </Menu.Item>
           <Menu.Item key='/info' icon={<FileOutlined/>}>
-            <Link to={'/info'}>我的资料</Link>
+            <Link to={'/info'}>本周日志</Link>
           </Menu.Item>
           <Menu.Item key='/logout' icon={<LogoutOutlined/>}>
             <Link onClick={this.logout}>退出登录</Link>

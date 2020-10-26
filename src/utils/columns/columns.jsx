@@ -13,11 +13,6 @@ export const columns = [
     key: 'date'
   },
   {
-    title: "打卡记录",
-    dataIndex: "record",
-    key: 'record'
-  },
-  {
     title: '状态',
     dataIndex: 'state',
     key: 'state',

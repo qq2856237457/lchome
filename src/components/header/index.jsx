@@ -1,49 +1,84 @@
 import React, {Component} from "react";
 import {connect} from "react-redux"
-import {Button,} from "antd";
+import {Button, message,} from "antd";
 
-import {changeState, getUser} from "../../redux/actions";
-import {reqClearStudent} from "../../api";
+
+import {reqInfo, reqClockStatus, reqClearStudent} from "../../api";
+
 
 import './index.less';
+import {clears} from '../../utils/clearers/clear'
 
 
 class Header extends Component {
   state = {
-    clear: '罗青云'
-  };
-  click = (username) => {
-
-    this.props.changeState(username)
+    clear: '',
+    user: {}
   };
 
-  getClear = async () => {
-    const result = await reqClearStudent();
-    const res = res.data;
+  changeState = async (username) => {
+    if (!username) {
+      return {}
+    }
+    const result = await reqClockStatus(username);
+    const res = result.data;
     if (res.status === 1) {
-      this.setState({clear:res.data})
+      message.success('成功!');
+      const user = res.data;
+      this.setState({user})
+    } else {
+      message.error(res.message);
     }
   };
 
-  componentWillUnmount() {
+  getUser = async (username) => {
+    if (!username) {
+      return {}
+    }
+    const result = await reqInfo(username);
+    const res = result.data;
+    if (res.status === 1) {
+      const user = res.data;
+      this.setState({user})
+    } else {
+      message.error(res.message);
+    }
+  };
 
-    // this.props.getUser(this.props.user.number);
+
+  click = () => {
+    this.changeState(this.props.user.number);
+  };
+
+  getClear = async () => {
+    const result = await reqClearStudent(this.props.user.id);
+    const res = result.data;
+
+    let str = res.data;
+    this.setState({
+      clear: clears[str]
+    })
+  };
+
+  componentWillMount() {
+    this.getUser(this.props.user.number);
+    this.getClear();
   }
 
   render() {
-    const user = this.props.user;
+    const user = this.state.user;
     const {clear} = this.state;
-    const {state, number} = user;
+    const {state} = user;
     return (
       <div className="site-layout-background">
-        <p className={'clear'}>今日值日：{clear}</p>
+        <p className={'clear'}>本周值日：{clear}</p>
         {
           state == 1 ?
             <Button type={"primary"} danger className={'state-button'}
-                    onClick={() => this.click(number)}>{'结束打卡'}
+                    onClick={() => this.click()}>{'结束打卡'}
             </Button> :
             <Button type={"primary"} className={'state-button'}
-                    onClick={() => this.click(number)}>{'开始打卡'}
+                    onClick={() => this.click()}>{'开始打卡'}
             </Button>
         }
       </div>
@@ -53,5 +88,5 @@ class Header extends Component {
 
 export default connect(
   state => ({user: state.user}),
-  {changeState, getUser}
+  {}
 )(Header)

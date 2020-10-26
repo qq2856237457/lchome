@@ -3,8 +3,9 @@ import React, {Component} from "react";
 export default class NotFound extends Component {
   render() {
     return (
-      <div>404</div>
+      <div>
+        <h1 style={{fontSize: 34}}>404</h1>
+      </div>
     )
   }
-
 }

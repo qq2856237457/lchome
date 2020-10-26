@@ -1,10 +1,10 @@
 import ajax from "./ajax";
 
 // 获得大一同学的列表
-export const reqFirstTeam = () => ajax("/manage/team1");
+export const reqFirstTeam = (date) => ajax("/manage/team1", date);
 
 //获得大二同学列表
-export const reqSecondTeam = () => ajax('/manage/team2');
+export const reqSecondTeam = (date) => ajax('/manage/team2', date);
 
 // 登录
 
@@ -28,7 +28,10 @@ export const reqInfo = (username) => ajax('/manage/person', {username});
 export const reqClockStatus = (username) => ajax('/manage/update', {username}, "POST");
 
 // 数据周记
-export const reqWeek = (week) => ajax('/manage/week', {week});
+export const reqWeek = (data) => ajax('/manage/week', data, "POST");
 
-//值日生
-export const reqClearStudent = () => ajax('/manage/clear');
+// //值日生
+export const reqClearStudent = () => ajax('/manage/getweek');
+
+// 打卡日志
+export const reqLog = (id) => ajax('/manage/log', {id});

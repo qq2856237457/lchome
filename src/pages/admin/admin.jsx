@@ -33,7 +33,7 @@ class Admin extends Component {
         <LeftNav/>
         <Layout className="site-layout">
           <Header/>
-          <Content style={{margin: '20px 16px', backgroundColor: "#fff"}}>
+          <Content style={{margin: '20px 16px', backgroundColor: "#fff",height: 350}} >
             <Switch>
               <Redirect exact from={'/'} to={'/home'}/>
               <Route path={'/home'} component={Home}/>

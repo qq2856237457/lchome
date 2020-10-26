@@ -5,7 +5,7 @@ import {Form, Input, Button, Modal, Radio, message,} from 'antd';
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import md5 from 'md5';
 
-import {reqLogin, reqRegister,reqInfo} from "../../api";
+import { reqRegister} from "../../api";
 import {loginControl, registerControl, login} from "../../redux/actions";
 import './login.less'
 
@@ -40,11 +40,7 @@ class Login extends Component {
       console.log('登录校验失败')
     }
   };
-  test = async () => {
-    const username = "123456";
-    const result=reqInfo(username);
-    console.log(result)
-  }
+
   registerFinish = async (value) => {
     this.props.registerControl(false);
     const {username, name, group} = value;
@@ -182,7 +178,7 @@ class Login extends Component {
               name="yaoqingma"
               rules={[
                 {required: true, whitespace: true, message: '请输入邀请码'},
-                {pattern: /^qwerty$/, message: '邀请码不正确'}
+                {pattern: /^lchome$/, message: '邀请码不正确'}
               ]}
             >
               <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="邀请码"/>
@@ -208,7 +204,7 @@ class Login extends Component {
           <p>Login page of online clock in system of
             Lecheng software studio, School of computer science,
             Southwest Petroleum University.</p>
-          <button className="black" onClick={this.test}>Join us</button>
+          <button className="black">Join us</button>
         </div>
       </div>
     )

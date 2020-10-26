@@ -12,13 +12,13 @@ class Team extends Component {
   };
 
   handChange = (title) => {
-this.setState({loading:true});
+    this.setState({loading: true});
     if (title == "大一打卡列表") {
       this.props.getFirst();
     } else {
       this.props.getSecond();
     }
-    this.setState({loading:false});
+    this.setState({loading: false});
   };
 
 

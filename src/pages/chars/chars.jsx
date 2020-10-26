@@ -1,41 +1,44 @@
 import React, {Component} from "react";
 import ReactEcharts from 'echarts-for-react';
 import {Card, DatePicker, message} from "antd";
+import {connect} from "react-redux";
 import locale from "antd/es/date-picker/locale/zh_CN";
+
+
 import {reqWeek} from "../../api";
+import {getToday} from "../../utils/dateUtils";
 
 
-
-
-export default class Chars extends Component {
+class Chars extends Component {
 
   state = {
     data: []
   };
 
-  getData = async (week) => {
-    const result = await reqWeek(week);
+  getData = async (date) => {
+    const data = getToday(date);
+    data.id = this.props.user.id;
+    const result = await reqWeek(data);
     const res = result.data;
     if (res.status === 1) {
-      this.setState({data: res.data});
+      this.setState({data: res.data.day});
     } else {
       message.error(res.message);
     }
   };
 
-  onChange = async (date, dateString) => {
-    const week = parseInt(dateString.substring(5, 7));
-    this.getData(week);
+  onChange = (date, dateString) => {
+    this.getData(date)
   };
 
-  componentWillUnmount() {
-    this.getData(1);
+  componentWillMount() {
+    this.getData(Date.now());
   }
 
   render() {
     const {data} = this.state;
     let sum = 0;
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < 7; i++) {
       sum += data[i];
     }
     const option = {
@@ -84,7 +87,7 @@ export default class Chars extends Component {
                 label: {
                   show: true,
                   position: 'middle',
-                  formatter: "数据平均 : " + (sum / data.length).toFixed(2) + 'h',
+                  formatter: "数据平均 : " + (sum / 7).toFixed(2) + 'h',
                 }
               }
             },
@@ -110,12 +113,16 @@ export default class Chars extends Component {
     );
     return (
       <div>
-        <Card title={'个人打卡数据周记'} extra={extra}>
+        <Card title={'个人打卡数据周报'} extra={extra}>
           <ReactEcharts option={option}/>
         </Card>
       </div>
     )
   }
 };
+
+export default connect(
+  state => ({user: state.user})
+)(Chars)
 
 
