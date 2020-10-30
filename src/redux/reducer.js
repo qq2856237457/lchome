@@ -9,7 +9,7 @@ import {
   RECEIVE_USER,
   REGISTER_CONTROL,
   RESET_USER,
-  SHOW_ERR_MSG
+
 } from "./action-types";
 
 
@@ -41,9 +41,6 @@ function user(state = initUser, action) {
   switch (action.type) {
     case RECEIVE_USER:
       return action.user;
-    case SHOW_ERR_MSG:
-      const errorMSG = action.errorMsg;
-      return {...state, errorMSG};
     case RESET_USER:
       return {};
     case CHANGE_STATE:

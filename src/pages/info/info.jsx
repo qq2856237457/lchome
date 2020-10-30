@@ -63,7 +63,7 @@ class Info extends Component {
           columns={columns}
           dataSource={data}
           pagination={{
-            defaultPageSize: 5,
+            defaultPageSize: 6,
             showQuickJumper: true,
             total: data.length
           }}

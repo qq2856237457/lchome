@@ -16,8 +16,7 @@ class Chars extends Component {
   };
 
   getData = async (date) => {
-    const data = getToday(date);
-    data.id = this.props.user.id;
+    let data = getToday(date);
     const result = await reqWeek(data);
     const res = result.data;
     if (res.status === 1) {

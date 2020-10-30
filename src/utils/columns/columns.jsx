@@ -42,7 +42,7 @@ export const columns = [
     key: 'completeness',
     render: tag => {
       tag = tag.toFixed(2);
-      if (tag == 100) {
+      if (tag >= 100) {
         let str = tag.toString();
         str = str + '%';
         return <Tag color={'green'}>{str}</Tag>

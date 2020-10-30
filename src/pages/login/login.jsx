@@ -37,7 +37,7 @@ class Login extends Component {
       password = md5(password);
       this.props.login(username, password)
     } else {
-      console.log('登录校验失败')
+      message.error('登录校验失败');
     }
   };
 
