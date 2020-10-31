@@ -16,8 +16,9 @@ class Chars extends Component {
   };
 
   getData = async (date) => {
-    let data = getToday(date);
-    const result = await reqWeek(data);
+    const data = getToday(date);
+    const {day, id, month, year} = data;
+    const result = await reqWeek(day, id, month, year);
     const res = result.data;
     if (res.status === 1) {
       this.setState({data: res.data.day});

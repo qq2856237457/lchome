@@ -2,6 +2,7 @@
   "name": "lchome",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@svgr/webpack": "4.3.3",
@@ -153,5 +154,5 @@
       "react-app"
     ]
   },
-  "proxy": "http://192.168.31.15:8080"
+  "proxy": "http://47.98.254.16:8080"
 }

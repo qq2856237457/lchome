@@ -3,6 +3,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 
 import Login from "./pages/login/login";
 import Admin from "./pages/admin/admin";
+import Index from "./pages/index";
 
 export default class App extends Component {
   render() {
@@ -10,6 +11,7 @@ export default class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route path={'/login'} component={Login}></Route>
+          <Route path={'/index'} component={Index}></Route>
           <Route path={'/'} component={Admin}></Route>
         </Switch>
       </BrowserRouter>

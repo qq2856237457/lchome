@@ -27,13 +27,17 @@ class Admin extends Component {
     const user = this.props.user;
     if (!user || !user.id) {
       return <Redirect to="/login"/>
+    } else {
+      if (user.number === 1010) {
+          return <Redirect to="/index"/>
+      }
     }
     return (
       <Layout style={{minHeight: '100vh'}}>
         <LeftNav/>
         <Layout className="site-layout">
           <Header/>
-          <Content style={{margin: '20px 16px', backgroundColor: "#fff",height: 350}} >
+          <Content style={{margin: '20px 16px', backgroundColor: "#fff", height: 350}}>
             <Switch>
               <Redirect exact from={'/'} to={'/home'}/>
               <Route path={'/home'} component={Home}/>
