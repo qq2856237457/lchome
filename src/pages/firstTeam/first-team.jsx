@@ -20,6 +20,7 @@ class First extends Component {
   render() {
     const title = '大一打卡列表';
     const data = this.props.list;
+
     return (
       <Team columns={columns} data={data} title={title}></Team>
     )

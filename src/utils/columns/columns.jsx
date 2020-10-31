@@ -37,6 +37,15 @@ export const columns = [
     }
   },
   {
+    title: '本周任务(h)',
+    dataIndex: 'task',
+    key: 'task',
+    render: time => {
+      time = time+'h';
+      return time
+    }
+  },
+  {
     title: '完成度',
     dataIndex: 'completeness',
     key: 'completeness',
