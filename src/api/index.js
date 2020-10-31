@@ -37,4 +37,7 @@ export const reqClearStudent = () => ajax('/manage/getweek');
 export const reqLog = (id) => ajax('/manage/log', {id});
 
 // 管理员push日志
-export const reqPush = (id) => ajax('manage/push', {id});
+export const reqPush = (day, month, year,con) => ajax('admin/push_report', {day, month, year,con},"POST");
+
+//管理员增加打卡时间
+export const reqAdd=(name,time)=>ajax('/admin/add',{name,time},"POST")

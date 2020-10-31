@@ -25,7 +25,6 @@ class LeftNav extends Component {
   };
 
   onCollapse = collapsed => {
-    console.log(collapsed);
     this.setState({collapsed});
   };
 
@@ -40,9 +39,7 @@ class LeftNav extends Component {
     });
   };
 
-  componentWillMount() {
 
-  }
 
   render() {
     const user = this.props.user;

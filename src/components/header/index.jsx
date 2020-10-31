@@ -27,7 +27,8 @@ class Header extends Component {
       const user = res.data;
       this.setState({user})
     } else {
-      message.error(res.message);
+      this.getUser(this.props.user.number);
+      message.error(res.msg);
     }
   };
 
@@ -41,7 +42,7 @@ class Header extends Component {
       const user = res.data;
       this.setState({user})
     } else {
-      message.error(res.message);
+      message.error(res.msg);
     }
   };
 
