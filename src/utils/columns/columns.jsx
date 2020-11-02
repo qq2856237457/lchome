@@ -41,6 +41,7 @@ export const columns = [
     dataIndex: 'task',
     key: 'task',
     render: time => {
+      time=time.toFixed(2);
       time = time+'h';
       return time
     }

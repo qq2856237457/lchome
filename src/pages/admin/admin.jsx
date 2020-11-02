@@ -29,7 +29,7 @@ class Admin extends Component {
       return <Redirect to="/login"/>
     } else {
       if (user.number == 1010) {
-          return <Redirect to="/admin"/>
+          return <Redirect to="/index"/>
       }
     }
     return (

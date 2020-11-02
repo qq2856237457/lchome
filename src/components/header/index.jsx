@@ -3,7 +3,8 @@ import {connect} from "react-redux"
 import {Button, message,} from "antd";
 
 
-import {reqInfo, reqClockStatus, reqClearStudent} from "../../api";
+
+import {reqInfo, reqClockStatus, reqClearStudent,reqIp} from "../../api";
 
 
 import './index.less';
@@ -13,14 +14,26 @@ import {clears} from '../../utils/clearers/clear'
 class Header extends Component {
   state = {
     clear: '',
-    user: {}
+    user: {},
   };
 
+  // getIp=async ()=>{
+  //   const result=await reqIp();
+  //   this.setState({result})
+  //
+  // };
+
   changeState = async (username) => {
+
     if (!username) {
       return {}
     }
     const result = await reqClockStatus(username);
+    // const ip=await this.getIp();
+    // console.log(ip);
+
+    // this.getIp();
+
     const res = result.data;
     if (res.status === 1) {
       message.success('成功!');
