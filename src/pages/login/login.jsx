@@ -178,7 +178,7 @@ class Login extends Component {
               name="yaoqingma"
               rules={[
                 {required: true, whitespace: true, message: '请输入邀请码'},
-                {pattern: /^lchome$/, message: '邀请码不正确'}
+                {pattern: /^Nginx$/, message: '邀请码不正确'}
               ]}
             >
               <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="邀请码"/>

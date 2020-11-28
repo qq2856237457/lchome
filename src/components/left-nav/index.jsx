@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Avatar, Menu, Layout, Modal} from "antd";
+import {Avatar, Menu, Layout, Modal, message} from "antd";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {
@@ -8,12 +8,14 @@ import {
   FileOutlined,
   TeamOutlined,
   UserOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  OrderedListOutlined
 } from '@ant-design/icons';
 
 import './index.less';
 import {logout} from "../../redux/actions";
-import img from  '../../static/head.jpg'
+import img from '../../static/head.jpg'
+import {reqInfo} from "../../api";
 
 const {SubMenu} = Menu;
 const {Sider} = Layout;
@@ -22,6 +24,7 @@ const {confirm} = Modal;
 class LeftNav extends Component {
   state = {
     collapsed: false,
+    user:{}
   };
 
   onCollapse = collapsed => {
@@ -39,12 +42,29 @@ class LeftNav extends Component {
     });
   };
 
-
+  getUser = async (username) => {
+    if (!username) {
+      return {}
+    }
+    const result = await reqInfo(username);
+    const res = result.data;
+    if (res.status === 1) {
+      const user = res.data;
+      this.setState({user})
+    } else {
+      message.error(res.msg);
+    }
+  };
+componentDidMount() {
+  this.getUser(this.props.user.number);
+}
 
   render() {
-    const user = this.props.user;
-    const {name} = user;
+
+    const {name} = this.state.user;
     const {collapsed} = this.state;
+    let sum=parseFloat(this.state.user.sum);
+    sum=sum.toFixed(2);
 
     return (
       <Sider
@@ -61,7 +81,8 @@ class LeftNav extends Component {
             src={img}
           />
           <div className={'signature'} style={{display: collapsed ? "none" : ''}}>
-            {name}
+            <p>{name}</p>
+            <p>本周：{sum}h</p>
           </div>
         </div>
         <Menu theme="light" defaultSelectedKeys={['/home']} mode="inline">
@@ -76,11 +97,14 @@ class LeftNav extends Component {
               <Link to={'/first'}>大一打卡详情</Link>
             </Menu.Item>
           </SubMenu>
-          <Menu.Item key='/chars' icon={<BarChartOutlined />}>
+          <Menu.Item key='/chars' icon={<BarChartOutlined/>}>
             <Link to={'/chars'}>打卡周报</Link>
           </Menu.Item>
           <Menu.Item key='/info' icon={<FileOutlined/>}>
             <Link to={'/info'}>本周日志</Link>
+          </Menu.Item>
+          <Menu.Item key='/article' icon={<OrderedListOutlined/>}>
+            <Link to={'/article'}>乐程头条</Link>
           </Menu.Item>
           <Menu.Item key='/logout' icon={<LogoutOutlined/>}>
             <Link onClick={this.logout}>退出登录</Link>

@@ -1,11 +1,12 @@
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 import {Button, Card, Table} from "antd";
 import {connect} from "react-redux"
 
 import {formateDate} from '../../utils/dateUtils'
 import {getFirst, getSecond} from "../../redux/actions";
+import {throttle} from "../../utils/debounce";
 
-class Team extends Component {
+class Team extends PureComponent {
   state = {
     loading: false,
     currentTime: formateDate(Date.now())
@@ -42,17 +43,19 @@ class Team extends Component {
     const {loading} = this.state;
     const {columns, data, title} = this.props;
     const {currentTime} = this.state;
+    const throttleClick=throttle(this.handChange,1000)
     const extra = (
       <div>
         <span style={{marginRight: 40}}>{currentTime}</span>
         <Button type={"primary"}
-                onClick={() => this.handChange(title)}
+                onClick={() => throttleClick(title)}
                 style={{marginRight: 20}}
         >
           刷新
         </Button>
       </div>
     );
+    const length=data.length;
     return (
       <Card title={title} extra={extra}>
         <Table
@@ -61,9 +64,9 @@ class Team extends Component {
           columns={columns}
           dataSource={data}
           pagination={{
-            defaultPageSize: 5,
+            defaultPageSize: 20,
             showQuickJumper: true,
-            total: data.length
+            total: length
           }}
         />
       </Card>

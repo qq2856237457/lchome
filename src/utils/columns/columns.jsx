@@ -1,5 +1,5 @@
 import React from "react";
-import {Tag} from "antd";
+import {Progress} from "antd";
 
 export const columns = [
   {
@@ -13,10 +13,12 @@ export const columns = [
     key: 'date'
   },
   {
+
     title: '状态',
     dataIndex: 'state',
     key: 'state',
     sorter: (a, b) => a.state - b.state,
+    defaultSortOrder: "descend",
     render: state => {
       if (state == 1) {
         return <p style={{color: 'dodgerblue'}}>正在打卡</p>
@@ -41,8 +43,8 @@ export const columns = [
     dataIndex: 'task',
     key: 'task',
     render: time => {
-      time=time.toFixed(2);
-      time = time+'h';
+      time = time.toFixed(2);
+      time = time + 'h';
       return time
     }
   },
@@ -53,17 +55,11 @@ export const columns = [
     render: tag => {
       tag = tag.toFixed(2);
       if (tag >= 100) {
-        let str = tag.toString();
-        str = str + '%';
-        return <Tag color={'green'}>{str}</Tag>
-      } else if (tag < 100 && tag >= 70) {
-        let str = tag.toString();
-        str = str + '%';
-        return <Tag color={'geekblue'}>{str}</Tag>
-      } else if (tag < 70) {
-        let str = tag.toString();
-        str = str + '%';
-        return <Tag color={'volcano'}>{str}</Tag>
+        return <Progress percent={tag} status="success"/>
+      } else if (tag < 100) {
+        return <Progress strokeColor={{'0%': '#108ee9', '100%': '#87d068',}}
+                         status="active"
+                         percent={tag}/>
       }
     }
   },

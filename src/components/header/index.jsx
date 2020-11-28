@@ -4,7 +4,9 @@ import {Button, message,} from "antd";
 
 
 
-import {reqInfo, reqClockStatus, reqClearStudent,reqIp} from "../../api";
+import {reqInfo, reqClockStatus, reqClearStudent} from "../../api";
+import {debounce} from "../../utils/debounce";
+import storageUtils from "../../utils/storageUtils";
 
 
 import './index.less';
@@ -17,11 +19,7 @@ class Header extends Component {
     user: {},
   };
 
-  // getIp=async ()=>{
-  //   const result=await reqIp();
-  //   this.setState({result})
-  //
-  // };
+
 
   changeState = async (username) => {
 
@@ -29,11 +27,6 @@ class Header extends Component {
       return {}
     }
     const result = await reqClockStatus(username);
-    // const ip=await this.getIp();
-    // console.log(ip);
-
-    // this.getIp();
-
     const res = result.data;
     if (res.status === 1) {
       message.success('成功!');
@@ -55,6 +48,7 @@ class Header extends Component {
       const user = res.data;
       this.setState({user})
     } else {
+
       message.error(res.msg);
     }
   };
@@ -65,16 +59,15 @@ class Header extends Component {
   };
 
   getClear = async () => {
-    const result = await reqClearStudent(this.props.user.id);
+    const result = await reqClearStudent();
     const res = result.data;
-
     let str = res.data;
     this.setState({
       clear: clears[str]
     })
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.getUser(this.props.user.number);
     this.getClear();
   }
@@ -83,16 +76,17 @@ class Header extends Component {
     const user = this.state.user;
     const {clear} = this.state;
     const {state} = user;
+    const debounceClick=debounce(this.click,500);
     return (
       <div className="site-layout-background">
         <p className={'clear'}>本周值日：{clear}</p>
         {
           state == 1 ?
             <Button type={"primary"} danger className={'state-button'}
-                    onClick={() => this.click()}>{'结束打卡'}
+                    onClick={debounceClick}>{'结束打卡'}
             </Button> :
             <Button type={"primary"} className={'state-button'}
-                    onClick={() => this.click()}>{'开始打卡'}
+                    onClick={debounceClick}>{'开始打卡'}
             </Button>
         }
       </div>

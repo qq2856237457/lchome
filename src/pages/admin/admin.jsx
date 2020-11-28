@@ -15,6 +15,7 @@ import First from "../firstTeam/first-team";
 import NotFound from "../not-found/not-found";
 import Home from "../home/home";
 import Info from "../info/info";
+import Article from "../comment";
 
 
 import './admin.less';
@@ -29,7 +30,7 @@ class Admin extends Component {
       return <Redirect to="/login"/>
     } else {
       if (user.number == 1010) {
-          return <Redirect to="/index"/>
+        return <Redirect to="/index"/>
       }
     }
     return (
@@ -45,10 +46,21 @@ class Admin extends Component {
               <Route path={'/first'} component={First}/>
               <Route path={'/chars'} component={Chars}/>
               <Route path={'/info'} component={Info}/>
+              <Route path={'/article'} component={Article}/>
               <Route component={NotFound}/>
             </Switch>
           </Content>
-          <Footer style={{textAlign: 'center'}}>Copyright ©2010-2020 乐程软件工作室</Footer>
+          <Footer style={{textAlign: 'center'}}>
+            Copyright ©2010-2020 乐程软件工作室 &nbsp;&nbsp;
+            {
+
+              <a href="http://beian.miit.gov.cn" target={'_blank'}
+                 style={{color:'#080909'}}
+              >
+                蜀ICP备2020032991号
+              </a>
+            }
+          </Footer>
         </Layout>
       </Layout>
     )
