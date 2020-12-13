@@ -1,8 +1,8 @@
 import ajax from "./ajax";
 
 // const BASE='http://localhost:5000';
-// const BASE='';
-const  BASE='http://60.205.248.213:5000';
+const BASE='';
+// const  BASE='http://60.205.248.213:5000';
 
 
 
