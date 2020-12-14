@@ -6,7 +6,7 @@ import {Button, message,} from "antd";
 
 import {reqInfo, reqClockStatus, reqClearStudent} from "../../api";
 import {debounce} from "../../utils/debounce";
-import storageUtils from "../../utils/storageUtils";
+
 
 
 import './index.less';

@@ -1,4 +1,6 @@
 import store from "store";
+import React from "react";
+
 
 const USER_KEY = 'user_kay';
 
@@ -14,6 +16,7 @@ export default {
   },
 
   removeUser() {
-    store.remove(USER_KEY)
+    store.remove(USER_KEY);
+    // window.location.reload();
   }
 }

@@ -48,7 +48,7 @@ class Article extends Component {
     context: '',
     comments: [],
     value: '',
-    user:{}
+    user: {}
   };
 
   handleSubmit = async () => {
@@ -61,14 +61,14 @@ class Article extends Component {
       content: this.state.value,
     };
     this.setState({
-        value:''
+      value: ''
     });
 
-    const result=await reqAddComment(comment);
-    const res=result.data;
-    if (res.status===1){
-        this.getComment();
-    }else {
+    const result = await reqAddComment(comment);
+    const res = result.data;
+    if (res.status === 1) {
+      this.getComment();
+    } else {
       message.error(res.msg);
     }
 
@@ -98,10 +98,12 @@ class Article extends Component {
     const result = await reqGetMsg();
     const res = result.data;
     if (res.status === 1) {
-      this.setState({
-        title: res.data.title,
-        context: res.data.context
-      })
+      if (res.data != null) {
+        this.setState({
+          title: res.data.title,
+          context: res.data.context
+        })
+      }
     } else {
       message.error(res.msg);
     }
@@ -130,7 +132,7 @@ class Article extends Component {
   }
 
   render() {
-    const {comments, submitting, value, title, context,user} = this.state;
+    const {comments, submitting, value, title, context, user} = this.state;
     const {name} = user;
     return (
       <Card title={<Title level={3}>今日公告</Title>}>

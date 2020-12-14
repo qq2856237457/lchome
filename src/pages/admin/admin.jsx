@@ -29,7 +29,7 @@ class Admin extends Component {
     if (!user || !user.id) {
       return <Redirect to="/login"/>
     } else {
-      if (user.number == 1010) {
+      if (user.number === 1010) {
         return <Redirect to="/index"/>
       }
     }
