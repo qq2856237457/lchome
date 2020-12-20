@@ -1,12 +1,13 @@
 import React, {Component} from "react";
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {
-  Layout
+  Layout, message
 } from 'antd';
 import {connect} from "react-redux"
 import 'moment/locale/zh-cn';
 
-
+import {receiveUser} from "../../redux/actions";
+import storageUtils from "../../utils/storageUtils";
 import Header from "../../components/header";
 import LeftNav from "../../components/left-nav";
 import Chars from "../chars/chars";
@@ -19,12 +20,35 @@ import Article from "../comment";
 
 
 import './admin.less';
+import {reqInfo} from "../../api";
 
 const {Content, Footer,} = Layout;
 
 class Admin extends Component {
 
+  getUser = async (username) => {
+    if (!username) {
+      return {}
+    }
+    const result = await reqInfo(username);
+    const res = result.data;
+    if (res.status === 1) {
+      const user = res.data;
+      receiveUser({user})
+    } else {
+      message.error(res.msg);
+    }
+  };
+
+  componentWillMount() {
+    const username = storageUtils.getUser().number;
+    if (username) {
+      this.getUser(username)
+    }
+  }
+
   render() {
+
     const user = this.props.user;
     if (!user || !user.id) {
       return <Redirect to="/login"/>
@@ -55,7 +79,7 @@ class Admin extends Component {
             {
 
               <a href="http://beian.miit.gov.cn" target={'_blank'}
-                 style={{color:'#080909'}}
+                 style={{color: '#080909'}}
               >
                 蜀ICP备2020032991号
               </a>
@@ -69,5 +93,5 @@ class Admin extends Component {
 
 export default connect(
   state => ({user: state.user}),
-  {}
+  {receiveUser}
 )(Admin)

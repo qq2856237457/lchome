@@ -4,7 +4,8 @@ import {Button, message,} from "antd";
 
 
 
-import {reqInfo, reqClockStatus, reqClearStudent} from "../../api";
+import { reqClockStatus, reqClearStudent} from "../../api";
+import {receiveUser} from "../../redux/actions";
 import {debounce} from "../../utils/debounce";
 
 
@@ -16,10 +17,7 @@ import {clears} from '../../utils/clearers/clear'
 class Header extends Component {
   state = {
     clear: '',
-    user: {},
   };
-
-
 
   changeState = async (username) => {
 
@@ -31,24 +29,8 @@ class Header extends Component {
     if (res.status === 1) {
       message.success('成功!');
       const user = res.data;
-      this.setState({user})
+      receiveUser({user})
     } else {
-      this.getUser(this.props.user.number);
-      message.error(res.msg);
-    }
-  };
-
-  getUser = async (username) => {
-    if (!username) {
-      return {}
-    }
-    const result = await reqInfo(username);
-    const res = result.data;
-    if (res.status === 1) {
-      const user = res.data;
-      this.setState({user})
-    } else {
-
       message.error(res.msg);
     }
   };
@@ -68,12 +50,11 @@ class Header extends Component {
   };
 
   componentDidMount() {
-    this.getUser(this.props.user.number);
     this.getClear();
   }
 
   render() {
-    const user = this.state.user;
+    const user = this.props.user;
     const {clear} = this.state;
     const {state} = user;
     const debounceClick=debounce(this.click,500);
@@ -96,5 +77,5 @@ class Header extends Component {
 
 export default connect(
   state => ({user: state.user}),
-  {}
+  {receiveUser}
 )(Header)

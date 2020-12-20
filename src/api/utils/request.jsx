@@ -16,7 +16,7 @@ service.interceptors.request.use(function (config) {
   config.headers["Auadsjklasdjla"] = "qwererewrrwerwe";
 
 
-  console.log(config);
+  // console.log(config);
   return config;
 }, function (error) {
   // 请求错误做些什么

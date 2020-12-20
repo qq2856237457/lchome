@@ -15,7 +15,7 @@ import {
 import './index.less';
 import {logout} from "../../redux/actions";
 import img from '../../static/head.jpg'
-import {reqInfo} from "../../api";
+
 
 const {SubMenu} = Menu;
 const {Sider} = Layout;
@@ -24,7 +24,7 @@ const {confirm} = Modal;
 class LeftNav extends Component {
   state = {
     collapsed: false,
-    user:{}
+
   };
 
   onCollapse = collapsed => {
@@ -42,28 +42,14 @@ class LeftNav extends Component {
     });
   };
 
-  getUser = async (username) => {
-    if (!username) {
-      return {}
-    }
-    const result = await reqInfo(username);
-    const res = result.data;
-    if (res.status === 1) {
-      const user = res.data;
-      this.setState({user})
-    } else {
-      message.error(res.msg);
-    }
-  };
-componentDidMount() {
-  this.getUser(this.props.user.number);
-}
+
+
 
   render() {
 
-    const {name} = this.state.user;
+    const {name} = this.props.user;
     const {collapsed} = this.state;
-    let sum=parseFloat(this.state.user.sum);
+    let sum=parseFloat(this.props.user.sum);
     sum=sum.toFixed(2);
 
     return (

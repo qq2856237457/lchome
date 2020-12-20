@@ -43,7 +43,7 @@ class Team extends PureComponent {
     const {loading} = this.state;
     const {columns, data, title} = this.props;
     const {currentTime} = this.state;
-    const throttleClick=throttle(this.handChange,1000)
+    const throttleClick=throttle(this.handChange,1000);
     const extra = (
       <div>
         <span style={{marginRight: 40}}>{currentTime}</span>

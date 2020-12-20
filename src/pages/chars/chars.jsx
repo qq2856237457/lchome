@@ -31,7 +31,7 @@ class Chars extends Component {
     this.getData(date)
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.getData(Date.now());
   }
 

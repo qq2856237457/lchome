@@ -22,7 +22,7 @@ export function getToday(time) {
     "year": date.getFullYear(),
     "month": date.getMonth() + 1,
     "day": date.getDate(),
-    "id": storageUtils.getUser().id
+    // "id": storageUtils.getUser().id
   };
   return data
 }

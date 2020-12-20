@@ -35,9 +35,9 @@ function registerComponentControl(state = initRegisterFlag, action) {
   }
 }
 
-const initUser = storageUtils.getUser();
 
-function user(state = initUser, action) {
+
+function user(state = {}, action) {
   switch (action.type) {
     case RECEIVE_USER:
       return action.user;

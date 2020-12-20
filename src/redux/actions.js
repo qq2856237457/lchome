@@ -51,41 +51,6 @@ export const login = (username, password) => {
 };
 
 
-
-// export const changeState = (username) => {
-//   return async dispatch => {
-//     const result = await reqClockStatus(username);
-//     const res = result.data;
-//     // console.log(res)
-//     if (res.status === 1) {
-//       const user = res.data;
-//       // 保存到local中
-//       storageUtils.saveUser(user);
-//       dispatch(receiveUser(user));
-//     } else {
-//       const msg = res.msg;
-//       dispatch(showErrMsg(msg))
-//     }
-//   }
-// };
-
-// export const getUser = (username) => {
-//   return async dispatch => {
-//     const result = await reqInfo(username);
-//     const res = result.data;
-//     // console.log(res)
-//     if (res.status === 1) {
-//       const user = res.data;
-//       // 保存到local中
-//       // storageUtils.saveUser(user);
-//       dispatch(receiveUser(user));
-//     } else {
-//       const msg = res.msg;
-//       dispatch(showErrMsg(msg))
-//     }
-//   }
-// };
-
 export const getFirst = () => {
   return async dispatch => {
     const result = await reqFirstTeam(getToday(Date.now()));
